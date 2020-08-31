@@ -67,10 +67,11 @@ class _DeleteTaskState extends State<DeleteTask> {
             direction: Axis.vertical,
             children: [
               Text(
-                'Delete completed tasks',
+                'Delete ${widget.task.status == 1 ? "completed" : "incomplete"} tasks',
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
               ),
-              Text('Delete 1 tasks?'),
+              Text(
+                  'Delete this task "${widget.task.title.split(' ').length > 5 ? '${widget.task.title.split(' ').sublist(0, 6).join(" ")}...' : widget.task.title}"?'),
               Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 spacing: 10.0,

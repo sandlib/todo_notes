@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_todo/add_task_screen.dart';
@@ -44,10 +45,11 @@ class _TODOListScreenState extends State<TODOListScreen> {
             subtitle: Text(
               '${_dateFormat.format(task.date)} . ${task.priority}',
               style: TextStyle(
-                  fontSize: 15.0,
-                  decoration: task.status == 0
-                      ? TextDecoration.none
-                      : TextDecoration.lineThrough),
+                fontSize: 15.0,
+                decoration: task.status == 0
+                    ? TextDecoration.none
+                    : TextDecoration.lineThrough,
+              ),
             ),
             trailing: Checkbox(
               activeColor: Theme.of(context).primaryColor,
@@ -76,7 +78,9 @@ class _TODOListScreenState extends State<TODOListScreen> {
                       ));
             },
           ),
-          Divider()
+          Divider(
+            thickness: 1.0,
+          )
         ],
       ),
     );
@@ -101,7 +105,9 @@ class _TODOListScreenState extends State<TODOListScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
             );
           }
 
@@ -131,7 +137,7 @@ class _TODOListScreenState extends State<TODOListScreen> {
                         height: 10.0,
                       ),
                       Text(
-                        'Task $completedTaskCount of ${snapshot.data.length}',
+                        'Completed Task $completedTaskCount of ${snapshot.data.length}',
                         style: TextStyle(
                             color: Colors.grey,
                             fontSize: 20.0,

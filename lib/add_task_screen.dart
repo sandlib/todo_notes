@@ -1,3 +1,7 @@
+import 'dart:io' show Platform;
+
+import 'package:ads/ads.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,8 +26,18 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final DateFormat _dateFormat = DateFormat('MMM dd, yyyy');
   List<String> priority = ["Low", "Medium", "High"];
 
+  Ads appads, appads2;
+
   _handleDatePicker() async {
     final DateTime date = await showDatePicker(
+        builder: (BuildContext context, Widget child) => Theme(
+              child: child,
+              data: ThemeData.light().copyWith(
+                colorScheme: ColorScheme.light(
+                  primary: Color(0xFF2DD09C),
+                ),
+              ),
+            ),
         context: context,
         initialDate: _date,
         firstDate: DateTime(2000),
@@ -58,6 +72,18 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
+  final String appId = Platform.isAndroid
+      ? 'ca-app-pub-2567202150499835~5852853130'
+      : 'ca-app-pub-2567202150499835~7273746015';
+
+  final String bannerUnitId = Platform.isAndroid
+      ? 'ca-app-pub-2567202150499835/5428335394'
+      : 'ca-app-pub-2567202150499835/8395255994';
+
+  final String bannerUnitId2 = Platform.isAndroid
+      ? 'ca-app-pub-2567202150499835/5480306284'
+      : 'ca-app-pub-2567202150499835/8997891223';
+
   @override
   void initState() {
     super.initState();
@@ -67,12 +93,43 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       _priority = widget.task.priority;
     }
     _dateController.text = _dateFormat.format(_date);
+
+    //Assign a listener
+    var eventListener = (MobileAdEvent event) {
+      if (event == MobileAdEvent.opened) {
+        print("evenetListener: The opened ad is clicked on.");
+      }
+    };
+    appads = Ads(
+      appId,
+      bannerUnitId: bannerUnitId,
+      keywords: <String>['ibm', 'computers'],
+      contentUrl: 'http://www.ibm.com',
+      childDirected: false,
+      testDevices: ['Samsung_Galaxy_SII_API_26:5554'],
+      testing: false,
+      listener: eventListener,
+    );
+    appads2 = Ads(
+      appId,
+      bannerUnitId: bannerUnitId2,
+      keywords: <String>['ibm', 'computers'],
+      contentUrl: 'http://www.ibm.com',
+      childDirected: false,
+      testDevices: ['Samsung_Galaxy_SII_API_26:5554'],
+      testing: false,
+      listener: eventListener,
+    );
+    appads.showBannerAd();
+    appads.showBannerAd(state: this, anchorOffset: null);
   }
 
   @override
   void dispose() {
     _dateController.dispose();
+
     super.dispose();
+    appads.dispose();
   }
 
   @override
@@ -178,6 +235,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               : null,
                           onChanged: (value) {
                             setState(() {
+                              appads2.showBannerAd(
+                                  state: this, anchorOffset: null);
                               _priority = value;
                             });
                           },
