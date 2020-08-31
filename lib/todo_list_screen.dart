@@ -5,6 +5,7 @@ import 'package:personal_todo/add_task_screen.dart';
 import 'package:personal_todo/database_helper.dart';
 import 'package:personal_todo/delete_task_screen.dart';
 import 'package:personal_todo/models/task_model.dart';
+import 'package:personal_todo/sticky/sticky_note.dart';
 
 class TODOListScreen extends StatefulWidget {
   static const id = "todoHome";
@@ -33,50 +34,53 @@ class _TODOListScreenState extends State<TODOListScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         children: [
-          ListTile(
-            title: Text(
-              task.title,
-              style: TextStyle(
-                  fontSize: 18.0,
+          StickyNote(
+            color: task.status == 1 ? Colors.orangeAccent : Colors.yellowAccent,
+            child: ListTile(
+              title: Text(
+                task.title,
+                style: TextStyle(
+                    fontSize: 18.0,
+                    decoration: task.status == 0
+                        ? TextDecoration.none
+                        : TextDecoration.lineThrough),
+              ),
+              subtitle: Text(
+                '${_dateFormat.format(task.date)} . ${task.priority}',
+                style: TextStyle(
+                  fontSize: 15.0,
                   decoration: task.status == 0
                       ? TextDecoration.none
-                      : TextDecoration.lineThrough),
-            ),
-            subtitle: Text(
-              '${_dateFormat.format(task.date)} . ${task.priority}',
-              style: TextStyle(
-                fontSize: 15.0,
-                decoration: task.status == 0
-                    ? TextDecoration.none
-                    : TextDecoration.lineThrough,
-              ),
-            ),
-            trailing: Checkbox(
-              activeColor: Theme.of(context).primaryColor,
-              value: task.status == 1 ? true : false,
-              onChanged: (value) {
-                task.status = value ? 1 : 0;
-                DatabaseHelper.instance.updateTask(task);
-                _updateTaskList();
-              },
-            ),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => AddTaskScreen(
-                  updateTaskList: _updateTaskList,
-                  task: task,
+                      : TextDecoration.lineThrough,
                 ),
               ),
+              trailing: Checkbox(
+                activeColor: Theme.of(context).primaryColor,
+                value: task.status == 1 ? true : false,
+                onChanged: (value) {
+                  task.status = value ? 1 : 0;
+                  DatabaseHelper.instance.updateTask(task);
+                  _updateTaskList();
+                },
+              ),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AddTaskScreen(
+                    updateTaskList: _updateTaskList,
+                    task: task,
+                  ),
+                ),
+              ),
+              onLongPress: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) => DeleteTask(
+                          updateTask: _updateTaskList,
+                          task: task,
+                        ));
+              },
             ),
-            onLongPress: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) => DeleteTask(
-                        updateTask: _updateTaskList,
-                        task: task,
-                      ));
-            },
           ),
           Divider(
             thickness: 1.0,
