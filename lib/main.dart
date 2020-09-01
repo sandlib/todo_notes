@@ -7,8 +7,8 @@ void main() {
     debugShowCheckedModeBanner: false,
     title: 'TODOApp',
     theme: ThemeData(
-        //  primaryColor: Color(0xFF2DD09C),
-        primaryColor: Colors.green.shade800),
+      primaryColor: Color(0xFF184d47),
+    ),
     routes: {'todoHome': (context) => TODOListScreen()},
   ));
 }

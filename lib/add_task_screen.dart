@@ -34,7 +34,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               child: child,
               data: ThemeData.light().copyWith(
                 colorScheme: ColorScheme.light(
-                  primary: Color(0xFF2DD09C),
+                  primary: Color(0xFF96bb7c),
                 ),
               ),
             ),
@@ -157,7 +157,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 Text(
                   widget.task == null ? 'Add Task' : 'Update Task',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 40.0,
                     fontWeight: FontWeight.bold,
                   ),

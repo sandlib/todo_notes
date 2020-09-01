@@ -35,7 +35,7 @@ class _TODOListScreenState extends State<TODOListScreen> {
       child: Column(
         children: [
           StickyNote(
-            color: task.status == 1 ? Colors.orangeAccent : Colors.yellowAccent,
+            color: task.status == 1 ? Color(0xffeebb4d) : Colors.yellowAccent,
             child: ListTile(
               title: Text(
                 task.title,
@@ -133,7 +133,7 @@ class _TODOListScreenState extends State<TODOListScreen> {
                       Text(
                         'My Task',
                         style: TextStyle(
-                            color: Colors.black,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 40.0,
                             fontWeight: FontWeight.bold),
                       ),
@@ -143,7 +143,7 @@ class _TODOListScreenState extends State<TODOListScreen> {
                       Text(
                         'Completed Task $completedTaskCount of ${snapshot.data.length}',
                         style: TextStyle(
-                            color: Colors.grey,
+                            color: Color(0xFF96bb7c),
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600),
                       )
