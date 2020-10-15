@@ -1,16 +1,10 @@
 # personal_todo
 
-A new Flutter application.
+This is a personal TODO App where users can write their own task in their own time to keep track of it.
 
-## Getting Started
+<h2>Platform</h2>
+ - Only Android
+ 
+ <h2>Language Used </h2>
+ -Dart
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
